@@ -1,4 +1,4 @@
-# MIT_Submissions
+# MIT Submissions
 
 This repo contains courseworks for the following courses at MIT.
 - 15.077/IDS.147 Statistical Machine Learning and Data Science
