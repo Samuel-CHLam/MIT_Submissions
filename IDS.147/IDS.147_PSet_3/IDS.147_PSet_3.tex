@@ -1,0 +1,1488 @@
+\documentclass[11pt]{article}
+
+    \usepackage[breakable]{tcolorbox}
+    \usepackage{parskip} % Stop auto-indenting (to mimic markdown behaviour)
+   
+	 \renewcommand{\familydefault}{\sfdefault}
+
+    \usepackage{iftex}
+    \ifPDFTeX
+    	\usepackage{helvet}
+    \else
+    	\usepackage{helvet}
+    \fi
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % Maintain compatibility with old templates. Remove in nbconvert 6.0
+    \let\Oldincludegraphics\includegraphics
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionFormat{nocaption}{}
+    \captionsetup{format=nocaption,aboveskip=0pt,belowskip=0pt}
+
+    \usepackage[Export]{adjustbox} % Used to constrain images to a maximum size
+    \adjustboxset{max size={0.9\linewidth}{0.9\paperheight}}
+    \usepackage{float}
+    \floatplacement{figure}{H} % forces figures to be placed at the correct location
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range
+    \makeatletter % fix for grffile with XeLaTeX
+    \def\Gread@@xetex#1{%
+      \IfFileExists{"\Gin@base".bb}%
+      {\Gread@eps{\Gin@base.bb}}%
+      {\Gread@@xetex@aux#1}%
+    }
+    \makeatother
+
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    % The default LaTeX title has an obnoxious amount of whitespace. By default,
+    % titling removes some of it. It also provides customization options.
+    \usepackage{titling}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{mathrsfs}
+    
+
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{IDS.147\_PSet\_3}
+    
+    
+    
+    
+    
+% Pygments definitions
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % For linebreaks inside Verbatim environment from package fancyvrb. 
+    \makeatletter
+        \newbox\Wrappedcontinuationbox 
+        \newbox\Wrappedvisiblespacebox 
+        \newcommand*\Wrappedvisiblespace {\textcolor{red}{\textvisiblespace}} 
+        \newcommand*\Wrappedcontinuationsymbol {\textcolor{red}{\llap{\tiny$\m@th\hookrightarrow$}}} 
+        \newcommand*\Wrappedcontinuationindent {3ex } 
+        \newcommand*\Wrappedafterbreak {\kern\Wrappedcontinuationindent\copy\Wrappedcontinuationbox} 
+        % Take advantage of the already applied Pygments mark-up to insert 
+        % potential linebreaks for TeX processing. 
+        %        {, <, #, %, $, ' and ": go to next line. 
+        %        _, }, ^, &, >, - and ~: stay at end of broken line. 
+        % Use of \textquotesingle for straight quote. 
+        \newcommand*\Wrappedbreaksatspecials {% 
+            \def\PYGZus{\discretionary{\char`\_}{\Wrappedafterbreak}{\char`\_}}% 
+            \def\PYGZob{\discretionary{}{\Wrappedafterbreak\char`\{}{\char`\{}}% 
+            \def\PYGZcb{\discretionary{\char`\}}{\Wrappedafterbreak}{\char`\}}}% 
+            \def\PYGZca{\discretionary{\char`\^}{\Wrappedafterbreak}{\char`\^}}% 
+            \def\PYGZam{\discretionary{\char`\&}{\Wrappedafterbreak}{\char`\&}}% 
+            \def\PYGZlt{\discretionary{}{\Wrappedafterbreak\char`\<}{\char`\<}}% 
+            \def\PYGZgt{\discretionary{\char`\>}{\Wrappedafterbreak}{\char`\>}}% 
+            \def\PYGZsh{\discretionary{}{\Wrappedafterbreak\char`\#}{\char`\#}}% 
+            \def\PYGZpc{\discretionary{}{\Wrappedafterbreak\char`\%}{\char`\%}}% 
+            \def\PYGZdl{\discretionary{}{\Wrappedafterbreak\char`\$}{\char`\$}}% 
+            \def\PYGZhy{\discretionary{\char`\-}{\Wrappedafterbreak}{\char`\-}}% 
+            \def\PYGZsq{\discretionary{}{\Wrappedafterbreak\textquotesingle}{\textquotesingle}}% 
+            \def\PYGZdq{\discretionary{}{\Wrappedafterbreak\char`\"}{\char`\"}}% 
+            \def\PYGZti{\discretionary{\char`\~}{\Wrappedafterbreak}{\char`\~}}% 
+        } 
+        % Some characters . , ; ? ! / are not pygmentized. 
+        % This macro makes them "active" and they will insert potential linebreaks 
+        \newcommand*\Wrappedbreaksatpunct {% 
+            \lccode`\~`\.\lowercase{\def~}{\discretionary{\hbox{\char`\.}}{\Wrappedafterbreak}{\hbox{\char`\.}}}% 
+            \lccode`\~`\,\lowercase{\def~}{\discretionary{\hbox{\char`\,}}{\Wrappedafterbreak}{\hbox{\char`\,}}}% 
+            \lccode`\~`\;\lowercase{\def~}{\discretionary{\hbox{\char`\;}}{\Wrappedafterbreak}{\hbox{\char`\;}}}% 
+            \lccode`\~`\:\lowercase{\def~}{\discretionary{\hbox{\char`\:}}{\Wrappedafterbreak}{\hbox{\char`\:}}}% 
+            \lccode`\~`\?\lowercase{\def~}{\discretionary{\hbox{\char`\?}}{\Wrappedafterbreak}{\hbox{\char`\?}}}% 
+            \lccode`\~`\!\lowercase{\def~}{\discretionary{\hbox{\char`\!}}{\Wrappedafterbreak}{\hbox{\char`\!}}}% 
+            \lccode`\~`\/\lowercase{\def~}{\discretionary{\hbox{\char`\/}}{\Wrappedafterbreak}{\hbox{\char`\/}}}% 
+            \catcode`\.\active
+            \catcode`\,\active 
+            \catcode`\;\active
+            \catcode`\:\active
+            \catcode`\?\active
+            \catcode`\!\active
+            \catcode`\/\active 
+            \lccode`\~`\~ 	
+        }
+    \makeatother
+
+    \let\OriginalVerbatim=\Verbatim
+    \makeatletter
+    \renewcommand{\Verbatim}[1][1]{%
+        %\parskip\z@skip
+        \sbox\Wrappedcontinuationbox {\Wrappedcontinuationsymbol}%
+        \sbox\Wrappedvisiblespacebox {\FV@SetupFont\Wrappedvisiblespace}%
+        \def\FancyVerbFormatLine ##1{\hsize\linewidth
+            \vtop{\raggedright\hyphenpenalty\z@\exhyphenpenalty\z@
+                \doublehyphendemerits\z@\finalhyphendemerits\z@
+                \strut ##1\strut}%
+        }%
+        % If the linebreak is at a space, the latter will be displayed as visible
+        % space at end of first line, and a continuation symbol starts next line.
+        % Stretch/shrink are however usually zero for typewriter font.
+        \def\FV@Space {%
+            \nobreak\hskip\z@ plus\fontdimen3\font minus\fontdimen4\font
+            \discretionary{\copy\Wrappedvisiblespacebox}{\Wrappedafterbreak}
+            {\kern\fontdimen2\font}%
+        }%
+        
+        % Allow breaks at special characters using \PYG... macros.
+        \Wrappedbreaksatspecials
+        % Breaks at punctuation characters . , ; ? ! and / need catcode=\active 	
+        \OriginalVerbatim[#1,codes*=\Wrappedbreaksatpunct]%
+    }
+    \makeatother
+
+    % Exact colors from NB
+    \definecolor{incolor}{HTML}{303F9F}
+    \definecolor{outcolor}{HTML}{D84315}
+    \definecolor{cellborder}{HTML}{CFCFCF}
+    \definecolor{cellbackground}{HTML}{F7F7F7}
+    
+    % prompt
+    \makeatletter
+    \newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+    \makeatother
+    \newcommand{\prompt}[4]{
+        \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+    }
+    
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    % FancyHDR
+	\usepackage{fancyhdr}
+	\pagestyle{fancyplain}
+	\rhead{Chun-Hei (Samuel) Lam \\ ID: 928931321}
+	\chead{15.077 Statistical ML and DS \\ Problem Sheet 3}
+	\lhead{}
+	\setlength{\headheight}{15pt}
+    
+    % Document title
+    \title{15.077 Statistical ML and DS}
+
+
+\begin{document}
+    
+\begin{figure}
+\includegraphics[scale=0.5]{MIT-Logo-(2).jpg}
+\end{figure}
+
+\begin{flushright}
+\begin{tabular}{ll}
+Module Code:     & 15.077                \\
+Lecturer:        & Roy Welsch         \\
+Coursework:      & PS.03                     \\
+Due Date:        & 25 March, 2021      \\ \\
+Student Name:    & Chun Hei (Samuel) LAM          \\
+MIT ID:          & 928931321              
+\end{tabular}
+\end{flushright}
+
+\vspace{2cm}
+
+\begin{center}
+    \huge 15.077 Statistical Learning and Data Science \\
+    \vspace{0.7cm}
+    \Large Problem Sheet 3 \\
+    \vspace{0.5cm}
+    \Large Comparison of Two Samples
+    \normalsize
+\end{center}
+
+\vspace{1.5cm}
+
+\noindent \textbf{Declaration:}
+\begin{tcolorbox}
+I pledge that the work submitted for this coursework is my own unassisted work unless stated otherwise.
+\end{tcolorbox}
+    
+\noindent \textbf{Notes from Student:}
+\begin{tcolorbox}
+Acknowledgement to Harry Yu. Please look at the python notebook attached if there are places that cannot be displayed properly.
+\end{tcolorbox}
+\newpage
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{83}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+\PY{k+kn}{from} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{special} \PY{k+kn}{import} \PY{n}{xlogy}
+\PY{k+kn}{from} \PY{n+nn}{scipy} \PY{k+kn}{import} \PY{n}{stats}
+\PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+\PY{k+kn}{import} \PY{n+nn}{seaborn} \PY{k}{as} \PY{n+nn}{sns}
+\PY{k+kn}{import} \PY{n+nn}{statsmodels}\PY{n+nn}{.}\PY{n+nn}{api} \PY{k}{as} \PY{n+nn}{sm}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{84}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{plotly}\PY{n+nn}{.}\PY{n+nn}{express} \PY{k}{as} \PY{n+nn}{px}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \hypertarget{rice-10.48-lottery-for-the-military-draft}{%
+\section{Rice 10.48: Lottery for the Military
+Draft}\label{rice-10.48-lottery-for-the-military-draft}}
+
+In 1970, Congress instituted a lottery for the military draft to support
+the unpopular war in Vietnam. All 366 possible birth dates were placed
+in plastic capsules in a rotating drum and were selected one by one.
+Eligible males born on the first day drawn were first in line to be
+drafted followed by those born on the second day drawn, etc. The results
+were criticized by some who claimed that government incompetence at
+running a fair lottery resulted in a tendency of men born later in the
+year being more likely to be drafted. Indeed, later investigation
+revealed that the birthdates were placed in the drum by month and were
+not thoroughly mixed. The columns of the file \texttt{1970lottery} are
+month, month number, day of the year, and draft number.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{85}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{lottery} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{./1970lottery.txt}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{quotechar}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZsq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{lottery1} \PY{o}{=} \PY{n}{lottery}\PY{p}{[}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Day\PYZus{}of\PYZus{}year}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Draft\PYZus{}No}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{]}
+\PY{n}{lottery2} \PY{o}{=} \PY{n}{lottery}\PY{p}{[}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Month\PYZus{}Number}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Draft\PYZus{}No}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{]}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{86}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{lottery1}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{86}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+     Day\_of\_year  Draft\_No
+0              1       305
+1              2       159
+2              3       251
+3              4       215
+4              5       101
+..           {\ldots}       {\ldots}
+361          362        78
+362          363       123
+363          364        16
+364          365         3
+365          366       100
+
+[366 rows x 2 columns]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \textbf{Part (a)} Plot draft number versus day number. Do you see any
+trend?
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{87}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{ax1} \PY{o}{=} \PY{n}{lottery}\PY{o}{.}\PY{n}{plot}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Day\PYZus{}of\PYZus{}year}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{y}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Draft\PYZus{}No}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{DarkBlue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_7_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \textbf{Part (b)} Calculate the Pearson and rank correlation
+coefficients. What do they suggest?
+
+    \emph{Solution: PMCC}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{88}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{pmcc} \PY{o}{=} \PY{n}{lottery1}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Draft\PYZus{}No}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Day\PYZus{}of\PYZus{}year}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}
+\PY{n}{pmcc}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{88}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+-0.2260414270110072
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \emph{Spearman's Rank Correlation Coefficient}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{89}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{srcc} \PY{o}{=} \PY{n}{lottery1}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{n}{method}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{spearman}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Draft\PYZus{}No}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Day\PYZus{}of\PYZus{}year}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}
+\PY{n}{srcc}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{89}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+-0.22580425074264954
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \emph{Conclusion: They suggest there is a weak negative correlation
+between \texttt{Draft\_No} and \texttt{Day\_of\_year}. It is less likely
+for men to be drafted at winter.}
+
+    \textbf{Part (c)} \emph{Is the correlation statistically significant?}
+One way to assess this is via a permutation test. Randomly permute the
+draft numbers and find the correlation of this random permutation with
+the day numbers. Do this 100 times and see how many of the resulting
+correlation coefficients exceed the one observed in the data. If you are
+not satisfied with 100 times, do it 1,000 times.
+
+    \emph{Solution:}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{90}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{n} \PY{o}{=} \PY{l+m+mi}{10000}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{91}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{samp\PYZus{}corrcoef} \PY{o}{=} \PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{corrcoef}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{367}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{permutation}\PY{p}{(}\PY{n}{lottery1}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Draft\PYZus{}No}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{]}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{98}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{samp\PYZus{}spearmanr} \PY{o}{=} \PY{p}{[}\PY{n}{stats}\PY{o}{.}\PY{n}{spearmanr}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{367}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{permutation}\PY{p}{(}\PY{n}{lottery1}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Draft\PYZus{}No}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{]}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{100}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{fig}\PY{p}{,} \PY{p}{(}\PY{n}{ax1}\PY{p}{,} \PY{n}{ax2}\PY{p}{)} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{14}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
+
+\PY{n}{ax1}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{samp\PYZus{}corrcoef}\PY{p}{)}
+\PY{n}{ax1}\PY{o}{.}\PY{n}{axvline}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{n}{pmcc}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax1}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{distribution of pmcc by permutation, n=}\PY{l+s+si}{\PYZob{}n\PYZcb{}}\PY{l+s+s2}{ }\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{ \PYZsh{} of pmcc exceed observed = }\PY{l+s+s2}{\PYZob{}}\PY{l+s+s2}{np.sum(np.absolute(samp\PYZus{}corrcoef)\PYZlt{}srcc)\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+\PY{n}{ax2}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{samp\PYZus{}spearmanr}\PY{p}{)}
+\PY{n}{ax2}\PY{o}{.}\PY{n}{axvline}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{n}{srcc}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax2}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{distribution of pmcc by permutation, n=}\PY{l+s+si}{\PYZob{}n\PYZcb{}}\PY{l+s+s2}{ }\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{ \PYZsh{} of srcc exceed observed = }\PY{l+s+s2}{\PYZob{}}\PY{l+s+s2}{np.sum(np.absolute(samp\PYZus{}spearmanr)\PYZlt{}pmcc)\PYZcb{}}\PY{l+s+s2}{\PYZdq{}} \PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{100}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+Text(0.5, 1.0, 'distribution of pmcc by permutation, n=10000 \textbackslash{}n \# of srcc exceed
+observed = 0')
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_19_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \emph{Comment: The histograms suggest that the observed \texttt{pmcc}
+and \texttt{srcc} are significant in the sense that the test
+\(H_0: \rho = 0\) against \(H_0: \rho \neq 0\) can be rejected with a
+very lower significant level (where \(\rho\) is population
+\texttt{pmcc}/\texttt{srcc}).}
+
+    \textbf{Part (d)} Make parallel boxplots of the draft numbers by month.
+Do you see any pattern?
+
+    \emph{Solution: For this question, please open the attached
+\texttt{ipynb} notebook to look at the interactive plot.}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{101}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{fig} \PY{o}{=} \PY{n}{px}\PY{o}{.}\PY{n}{box}\PY{p}{(}\PY{n}{lottery2}\PY{p}{,} \PY{n}{x}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Month\PYZus{}Number}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{y}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Draft\PYZus{}No}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{fig}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    
+    
+    
+    
+    \emph{Pattern: we see that the median of \texttt{Draft\_No} for
+different months are generally decreasing. The interquartile range of
+\texttt{Draft\_No} are generally decreasing as well.}
+
+    \textbf{Part (e)} Examine the sampling variability of the two
+correlation coefficients (Pearson and rank) using the bootstrap
+(re-sampling pairs with replacement) with 100 (or 1000) bootstrap
+samples. How does this compare with the permutation approach?
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{102}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{n} \PY{o}{=} \PY{l+m+mi}{100}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{103}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{boots\PYZus{}corrcoef} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{n}{boots\PYZus{}spearmanr} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+
+\PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}
+    \PY{n}{choice} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{choice}\PY{p}{(}\PY{l+m+mi}{366}\PY{p}{,}\PY{l+m+mi}{366}\PY{p}{)}
+    \PY{n}{lottery\PYZus{}choice} \PY{o}{=} \PY{p}{[}\PY{n}{lottery1}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Draft\PYZus{}No}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{choice}\PY{p}{]}
+    \PY{n}{boots\PYZus{}corrcoef} \PY{o}{+}\PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{corrcoef}\PY{p}{(}\PY{n}{choice}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{lottery\PYZus{}choice}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+    \PY{n}{boots\PYZus{}spearmanr} \PY{o}{+}\PY{o}{=} \PY{n}{stats}\PY{o}{.}\PY{n}{spearmanr}\PY{p}{(}\PY{n}{choice}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{lottery\PYZus{}choice}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{105}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{fig}\PY{p}{,} \PY{p}{(}\PY{n}{ax1}\PY{p}{,} \PY{n}{ax2}\PY{p}{)} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{14}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
+
+\PY{n}{ax1}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{samp\PYZus{}corrcoef}\PY{p}{)}
+\PY{n}{ax1}\PY{o}{.}\PY{n}{axvline}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{n}{pmcc}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax1}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{distribution of pmcc by resampling bootstrap, n=}\PY{l+s+si}{\PYZob{}n\PYZcb{}}\PY{l+s+s2}{ }\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{ \PYZsh{} of pmcc exceed observed = }\PY{l+s+s2}{\PYZob{}}\PY{l+s+s2}{np.sum(np.absolute(samp\PYZus{}corrcoef)\PYZlt{}srcc)\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+\PY{n}{ax2}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{samp\PYZus{}spearmanr}\PY{p}{)}
+\PY{n}{ax2}\PY{o}{.}\PY{n}{axvline}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{n}{srcc}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax2}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{distribution of pmcc by resampling bootstrap, n=}\PY{l+s+si}{\PYZob{}n\PYZcb{}}\PY{l+s+s2}{ }\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{ \PYZsh{} of srcc exceed observed = }\PY{l+s+s2}{\PYZob{}}\PY{l+s+s2}{np.sum(np.absolute(samp\PYZus{}spearmanr)\PYZlt{}pmcc)\PYZcb{}}\PY{l+s+s2}{\PYZdq{}} \PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{105}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+Text(0.5, 1.0, 'distribution of pmcc by resampling bootstrap, n=100 \textbackslash{}n \# of srcc
+exceed observed = 0')
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_28_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \emph{Comment: Again, the histograms suggest that the observed
+\texttt{pmcc} and \texttt{srcc} are significant in the sense that the
+test \(H_0: \rho = 0\) against \(H_0: \rho \neq 0\) can be rejected with
+a very lower significant level (where \(\rho\) is population
+\texttt{pmcc}/\texttt{srcc}).}
+
+    \hypertarget{rice-11.15-16-power-of-comparison-of-two-independent-samples}{%
+\section{Rice 11.15-16: Power of Comparison of Two Independent
+Samples:}\label{rice-11.15-16-power-of-comparison-of-two-independent-samples}}
+
+Suppose that \(n\) measurements are to be taken under a treatment
+condition and another \(n\) measurements are to be taken independently
+under a control condition. It is thought that the standard deviation of
+a single observation is about 10 under both conditions.
+
+    \textbf{Part (a)} How large should \(n\) be so that a 95\% confidence
+interval for \(\mu_X - \mu_Y\) has a width of \(2\)? (Use the normal
+distribution rather than the \(t\)-distribution, since \(n\) will turn
+out to be rather large.)
+
+    \emph{Solution: The length of the asymptotic confidence level is
+\(2z_{0.05/2}\sigma_{\bar{X} - \bar{Y}}\), where
+\(\sigma_{\bar{X}-\bar{Y}} \approx 10\sqrt{\frac{2}{n}}\). We want the
+length to be approximately equal to 2, therefore \begin{equation}
+2z_{0.05/2} \times 10\sqrt{\frac{2}{n}} = 2 \iff n = 200 \times z^2_{0.05/2}
+\end{equation}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{106}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{z} \PY{o}{=} \PY{n}{stats}\PY{o}{.}\PY{n}{norm}\PY{o}{.}\PY{n}{ppf}\PY{p}{(}\PY{l+m+mi}{1}\PY{o}{\PYZhy{}}\PY{p}{(}\PY{l+m+mi}{1}\PY{o}{\PYZhy{}}\PY{l+m+mf}{0.95}\PY{p}{)}\PY{o}{/}\PY{l+m+mi}{2}\PY{p}{)}
+\PY{n}{n} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{floor}\PY{p}{(}\PY{l+m+mi}{200}\PY{o}{*}\PY{p}{(}\PY{n}{z}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)} \PY{o}{/}\PY{o}{/} \PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{n should be as large as }\PY{l+s+si}{\PYZob{}n\PYZcb{}}\PY{l+s+s2}{.}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+n should be as large as 769.0.
+    \end{Verbatim}
+
+    \textbf{Part (b)} How large should \(n\) be so that the test of
+\(H_0: \mu_X = \mu_Y\) against the one-sided alternative
+\(H_A: \mu_X > \mu_Y\) has a power of \(0.5\) if \(\mu_X - \mu_Y = 2\)
+and \(\alpha = 0.10\)?
+
+    \emph{Solution: This indicates that
+\(\mathbb{P}(\text{Type II error}) = 0.5\), in otherwords, we have
+\begin{align*}
+\mathbb{P}\left( \frac{\bar{X} - \bar{Y}}{\sigma_{\bar{X}-\bar{Y}}} < z_{0.9} \;\bigg|\; \mu_x - \mu_Y = 2 \right) &= 0.5 \\
+\implies \mathbb{P}\left( \frac{\bar{X} - \bar{Y} - 2}{\sigma_{\bar{X}-\bar{Y}}} < z_{0.9} - \frac{2}{\sigma_{\bar{X}-\bar{Y}}} \;\bigg|\; \mu_x - \mu_Y = 2 \right) &= 0.5
+\end{align*} Of course, this further implies that \begin{equation}
+z_{0.9} - \frac{2}{\sigma_{\bar{X}-\bar{Y}}} = 0 \iff 10\sqrt{\frac{2}{n}} = \frac{2}{z_{0.9}} \iff n = 50z^2_{0.9}
+\end{equation}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{107}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{z} \PY{o}{=} \PY{n}{stats}\PY{o}{.}\PY{n}{norm}\PY{o}{.}\PY{n}{ppf}\PY{p}{(}\PY{l+m+mi}{1}\PY{o}{\PYZhy{}}\PY{l+m+mf}{0.1}\PY{p}{)}
+\PY{n}{n} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{floor}\PY{p}{(}\PY{l+m+mi}{50}\PY{o}{*}\PY{p}{(}\PY{n}{z}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{n should be as large as }\PY{l+s+si}{\PYZob{}n\PYZcb{}}\PY{l+s+s2}{.}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+n should be as large as 83.0.
+    \end{Verbatim}
+
+    \hypertarget{rice-11.39-telephone-lines}{%
+\section{Rice 11.39: Telephone Lines}\label{rice-11.39-telephone-lines}}
+
+An experiment was done to test a method for reducing faults on telephone
+lines (Welch 1987). Fourteen matched pairs of areas were used. The
+following table shows the fault rates for the control areas and for the
+test areas:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{108}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{telephone} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{p}{\PYZob{}}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Test}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{p}{[}\PY{l+m+mi}{676}\PY{p}{,}\PY{l+m+mi}{206}\PY{p}{,}\PY{l+m+mi}{230}\PY{p}{,}\PY{l+m+mi}{256}\PY{p}{,}\PY{l+m+mi}{280}\PY{p}{,}\PY{l+m+mi}{433}\PY{p}{,}\PY{l+m+mi}{337}\PY{p}{,}\PY{l+m+mi}{466}\PY{p}{,}\PY{l+m+mi}{497}\PY{p}{,}\PY{l+m+mi}{512}\PY{p}{,}\PY{l+m+mi}{794}\PY{p}{,}\PY{l+m+mi}{428}\PY{p}{,}\PY{l+m+mi}{452}\PY{p}{,}\PY{l+m+mi}{512}\PY{p}{]}\PY{p}{,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Control}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{p}{[}\PY{l+m+mi}{88}\PY{p}{,}\PY{l+m+mi}{570}\PY{p}{,}\PY{l+m+mi}{605}\PY{p}{,}\PY{l+m+mi}{617}\PY{p}{,}\PY{l+m+mi}{653}\PY{p}{,}\PY{l+m+mi}{2913}\PY{p}{,}\PY{l+m+mi}{924}\PY{p}{,}\PY{l+m+mi}{286}\PY{p}{,}\PY{l+m+mi}{1098}\PY{p}{,}\PY{l+m+mi}{982}\PY{p}{,}\PY{l+m+mi}{2346}\PY{p}{,}\PY{l+m+mi}{321}\PY{p}{,}\PY{l+m+mi}{615}\PY{p}{,}\PY{l+m+mi}{519}\PY{p}{]}\PY{p}{\PYZcb{}}\PY{p}{)}
+\PY{n}{telephone}\PY{o}{.}\PY{n}{T}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{108}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+          0    1    2    3    4     5    6    7     8    9     10   11   12  \textbackslash{}
+Test     676  206  230  256  280   433  337  466   497  512   794  428  452
+Control   88  570  605  617  653  2913  924  286  1098  982  2346  321  615
+
+          13
+Test     512
+Control  519
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \textbf{Part (a)} Plot the differences versus the control rate and
+summarize what you see.
+
+    \emph{Solution: Plot}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{109}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{telephone}\PY{o}{.}\PY{n}{Control}\PY{p}{,} \PY{n}{telephone}\PY{o}{.}\PY{n}{Test} \PY{o}{\PYZhy{}} \PY{n}{telephone}\PY{o}{.}\PY{n}{Control}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Control}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Difference}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Difference vs. Control}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{109}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+Text(0.5, 1.0, 'Difference vs. Control')
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_41_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \emph{Comment: seems like there is a positive correlation between the
+difference of rates and control rates - the higher the control rates
+are, the significant reduction of fault rates are.}
+
+    \textbf{Part (b)} Calculate the mean difference, its standard deviation,
+and a confidence interval.
+
+    *Solution: We compute the difference.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{110}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{diff} \PY{o}{=} \PY{n}{telephone}\PY{o}{.}\PY{n}{Test} \PY{o}{\PYZhy{}} \PY{n}{telephone}\PY{o}{.}\PY{n}{Control}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \emph{First Calculate the mean and standard deviation.}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{111}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{mean} \PY{o}{=} \PY{n}{diff}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}
+\PY{n}{stdev} \PY{o}{=} \PY{n}{diff}\PY{o}{.}\PY{n}{std}\PY{p}{(}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{mean = }\PY{l+s+s2}{\PYZob{}}\PY{l+s+s2}{np.round(mean,3)\PYZcb{}, standard deviation = }\PY{l+s+s2}{\PYZob{}}\PY{l+s+s2}{np.round(stdev,3)\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+mean = -461.286, standard deviation = 757.809
+    \end{Verbatim}
+
+    \emph{Then we compute the confidence interval.}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{168}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{z1} \PY{o}{=} \PY{n}{stats}\PY{o}{.}\PY{n}{t}\PY{o}{.}\PY{n}{ppf}\PY{p}{(}\PY{l+m+mf}{0.025}\PY{p}{,} \PY{n}{df}\PY{o}{=}\PY{l+m+mi}{14}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{n}{z2} \PY{o}{=} \PY{n}{stats}\PY{o}{.}\PY{n}{t}\PY{o}{.}\PY{n}{ppf}\PY{p}{(}\PY{l+m+mf}{0.975}\PY{p}{,} \PY{n}{df}\PY{o}{=}\PY{l+m+mi}{14}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{n}{lower} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{n}{mean}\PY{o}{+}\PY{p}{(}\PY{n}{stdev}\PY{o}{*}\PY{n}{z1}\PY{o}{/}\PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{l+m+mi}{14}\PY{p}{)}\PY{p}{)}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}
+\PY{n}{upper} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{round}\PY{p}{(}\PY{n}{mean}\PY{o}{+}\PY{p}{(}\PY{n}{stdev}\PY{o}{*}\PY{n}{z2}\PY{o}{/}\PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{l+m+mi}{14}\PY{p}{)}\PY{p}{)}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{95}\PY{l+s+si}{\PYZpc{} c}\PY{l+s+s2}{onfidence interval is [}\PY{l+s+si}{\PYZob{}lower\PYZcb{}}\PY{l+s+s2}{,}\PY{l+s+si}{\PYZob{}upper\PYZcb{}}\PY{l+s+s2}{]}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+95\% confidence interval is [-898.832,-23.74]
+    \end{Verbatim}
+
+    \textbf{Part (c)} Calculate the median difference and a confidence
+interval and compare to the previous result.
+
+    \emph{Solution: First compute the median.}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{113}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{median} \PY{o}{=} \PY{n}{diff}\PY{o}{.}\PY{n}{median}\PY{p}{(}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{median = }\PY{l+s+si}{\PYZob{}median\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+median = -368.5
+    \end{Verbatim}
+
+    \emph{We choose \(\alpha=0.05\) and construct a confidence interval. We
+first sort the data.}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{114}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{sorted\PYZus{}diff} \PY{o}{=} \PY{n}{diff}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{n}{ascending}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\PY{n}{sorted\PYZus{}diff}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{114}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+5    -2480
+10   -1552
+8     -601
+6     -587
+9     -470
+2     -375
+4     -373
+1     -364
+3     -361
+12    -163
+13      -7
+11     107
+7      180
+0      588
+dtype: int64
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \emph{Then we find \(k\) such that \(\mathbb{P}(N \leq k-1)\) is closest
+to 0.025, where \(N \sim \text{B}(14,0.5)\).}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{115}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{stats}\PY{o}{.}\PY{n}{binom}\PY{o}{.}\PY{n}{ppf}\PY{p}{(}\PY{l+m+mf}{0.025}\PY{p}{,} \PY{l+m+mi}{14}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{115}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+3.0
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{116}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{stats}\PY{o}{.}\PY{n}{binom}\PY{o}{.}\PY{n}{cdf}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{14}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{)}\PY{p}{,} \PY{n}{stats}\PY{o}{.}\PY{n}{binom}\PY{o}{.}\PY{n}{cdf}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{14}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{)}\PY{p}{,} \PY{n}{stats}\PY{o}{.}\PY{n}{binom}\PY{o}{.}\PY{n}{cdf}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{14}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{116}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+(0.006469726562499999, 0.02868652343750001, 0.08978271484375001)
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \emph{Clearly \(k=3+1=4\) is our optimal choice. Therefore the lower
+end-point is the \texttt{4}-th entry, while the upper end-point is
+\texttt{14-4+1=11}-th entry.}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{172}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{lower\PYZus{}b} \PY{o}{=} \PY{n}{sorted\PYZus{}diff}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{l+m+mi}{4}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+\PY{n}{upper\PYZus{}b} \PY{o}{=} \PY{n}{sorted\PYZus{}diff}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{l+m+mi}{11}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{95}\PY{l+s+si}{\PYZpc{} c}\PY{l+s+s2}{onfidence interval is [}\PY{l+s+si}{\PYZob{}lower\PYZus{}b\PYZcb{}}\PY{l+s+s2}{,}\PY{l+s+si}{\PYZob{}upper\PYZus{}b\PYZcb{}}\PY{l+s+s2}{]}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+95\% confidence interval is [-587,-7]
+    \end{Verbatim}
+
+    \emph{Comment: The non-parametric confidence interval is much wider
+since it assumes nothing about distribution of population. Turns out our
+data is more right-skewed, resulting in longer confidence interval.}
+
+    \textbf{Part (d)} Do you think it is more appropriate to use a
+\(t\)-test or a nonparametric method to test whether the apparent
+difference between test and control could be due to chance? Why? Carry
+out both tests and compare.
+
+    \emph{Solution: Again set \(H_0\) be there is no difference in rate, and
+\(H_1\) be that there is (systematic) reduction in rate. Again we take
+\(\alpha = 0.05\).}
+
+\emph{We first perform \(t\)-test. We compute the \(t\) statistic and
+its p-value.}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{118}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{t} \PY{o}{=} \PY{n}{mean} \PY{o}{/} \PY{p}{(}\PY{n}{stdev}\PY{o}{/}\PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{l+m+mi}{14}\PY{p}{)}\PY{p}{)}
+\PY{n}{p} \PY{o}{=} \PY{n}{stats}\PY{o}{.}\PY{n}{t}\PY{o}{.}\PY{n}{cdf}\PY{p}{(}\PY{n}{t}\PY{p}{,} \PY{n}{df}\PY{o}{=}\PY{l+m+mi}{14}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}
+
+\PY{k}{if} \PY{n}{p} \PY{o}{\PYZlt{}} \PY{l+m+mf}{0.05}\PY{p}{:}
+    \PY{n}{test\PYZus{}result} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{reject H0.}\PY{l+s+s2}{\PYZdq{}}
+\PY{k}{else}\PY{p}{:}
+    \PY{n}{test\PYZus{}result} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{insufficient evidence to reject H0.}\PY{l+s+s2}{\PYZdq{}}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{t statistic = }\PY{l+s+s2}{\PYZob{}}\PY{l+s+s2}{np.round(t,4)\PYZcb{}, p\PYZhy{}value = }\PY{l+s+s2}{\PYZob{}}\PY{l+s+s2}{np.round(p,4)\PYZcb{}}\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{, }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n}{test\PYZus{}result}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+t statistic = -2.2776, p-value = 0.0201, reject H0.
+    \end{Verbatim}
+
+    \emph{Non-parametric method.}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{119}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{w}\PY{p}{,} \PY{n}{p} \PY{o}{=} \PY{n}{stats}\PY{o}{.}\PY{n}{wilcoxon}\PY{p}{(}\PY{n}{diff}\PY{p}{,} \PY{n}{alternative}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{less}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{mode}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{exact}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+\PY{k}{if} \PY{n}{p} \PY{o}{\PYZlt{}} \PY{l+m+mf}{0.05}\PY{p}{:}
+    \PY{n}{test\PYZus{}result} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{reject H0.}\PY{l+s+s2}{\PYZdq{}}
+\PY{k}{else}\PY{p}{:}
+    \PY{n}{test\PYZus{}result} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{insufficient evidence to reject H0.}\PY{l+s+s2}{\PYZdq{}}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Wilcoxon statistic = }\PY{l+s+s2}{\PYZob{}}\PY{l+s+s2}{np.round(w,4)\PYZcb{}, p\PYZhy{}value = }\PY{l+s+s2}{\PYZob{}}\PY{l+s+s2}{np.round(p,4)\PYZcb{}}\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{, }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n}{test\PYZus{}result}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Wilcoxon statistic = 17.0, p-value = 0.0123, reject H0.
+    \end{Verbatim}
+
+    \emph{Comparision: both tests suggest there is sufficient evidence to
+reject \texttt{H0}. I would prefer exact Wilcoxon signed-rank test
+because it is more robust when handling data with outlier, like the one
+in our case.}
+
+    \hypertarget{rice-11.46---cloud-seeding}{%
+\section{Rice 11.46 - Cloud Seeding}\label{rice-11.46---cloud-seeding}}
+
+    The National Weather Bureau's ACN cloud-seeding project was carried out
+in the states of Oregon and Washington. Cloud seeding was accomplished
+by dispersing dry ice from an aircraft; only clouds that were deemed
+``ripe'' for seeding were candidates for seeding. On each occasion, a
+decision was made at random whether to seed, the probability of seeding
+being \(\frac{2}{3}\). This resulted in \(22\) seeded and \(13\) control
+cases. Three types of targets were considered, two of which are dealt
+with in this problem. Type I targets were large geographical areas
+downwind from the seeding; type II targets were sections of type I
+targets located so as to have, theoretically, the greatest sensitivity
+to cloud seeding. The following table gives the average target rainfalls
+(in inches) for the seeded and control cases, listed in chronological
+order. Is there evidence that seeding has an effect on either type of
+target?
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{120}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{control} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{p}{\PYZob{}}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Type I}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{p}{[}\PY{l+m+mf}{0.0080}\PY{p}{,}\PY{l+m+mf}{0.0046}\PY{p}{,}\PY{l+m+mf}{0.0549}\PY{p}{,}\PY{l+m+mf}{0.1313}\PY{p}{,}\PY{l+m+mf}{0.0587}\PY{p}{,}\PY{l+m+mf}{0.1723}\PY{p}{,}\PY{l+m+mf}{0.3812}\PY{p}{,}\PY{l+m+mf}{0.1720}\PY{p}{,}\PY{l+m+mf}{0.1182}\PY{p}{,}\PY{l+m+mf}{0.1383}\PY{p}{,}\PY{l+m+mf}{0.0106}\PY{p}{,}\PY{l+m+mf}{0.2126}\PY{p}{,}\PY{l+m+mf}{0.1435}\PY{p}{]}\PY{p}{,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Type II}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{p}{[}\PY{l+m+mf}{0.0000}\PY{p}{,}\PY{l+m+mf}{0.0000}\PY{p}{,}\PY{l+m+mf}{0.0053}\PY{p}{,}\PY{l+m+mf}{0.0920}\PY{p}{,}\PY{l+m+mf}{0.0220}\PY{p}{,}\PY{l+m+mf}{0.1133}\PY{p}{,}\PY{l+m+mf}{0.2880}\PY{p}{,}\PY{l+m+mf}{0.0000}\PY{p}{,}\PY{l+m+mf}{0.1058}\PY{p}{,}\PY{l+m+mf}{0.2050}\PY{p}{,}\PY{l+m+mf}{0.0100}\PY{p}{,}\PY{l+m+mf}{0.2450}\PY{p}{,}\PY{l+m+mf}{0.1529}\PY{p}{]}\PY{p}{\PYZcb{}}\PY{p}{)}
+\PY{n}{control}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{120}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+   Type I  Type II
+0  0.0080   0.0000
+1  0.0046   0.0000
+2  0.0549   0.0053
+3  0.1313   0.0920
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{121}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{seeded} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{p}{\PYZob{}}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Type I}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{p}{[}\PY{l+m+mf}{0.1218}\PY{p}{,}\PY{l+m+mf}{0.0403}\PY{p}{,}\PY{l+m+mf}{0.1166}\PY{p}{,}\PY{l+m+mf}{0.2375}\PY{p}{,}\PY{l+m+mf}{0.1256}\PY{p}{,}\PY{l+m+mf}{0.1400}\PY{p}{,}\PY{l+m+mf}{0.2439}\PY{p}{,}\PY{l+m+mf}{0.0072}\PY{p}{,}\PY{l+m+mf}{0.0707}\PY{p}{,}\PY{l+m+mf}{0.1036}\PY{p}{,}\PY{l+m+mf}{0.1632}\PY{p}{,}\PY{l+m+mf}{0.0788}\PY{p}{,}\PY{l+m+mf}{0.0365}\PY{p}{,}\PY{l+m+mf}{0.2409}\PY{p}{,}\PY{l+m+mf}{0.0408}\PY{p}{,}\PY{l+m+mf}{0.2204}\PY{p}{,}\PY{l+m+mf}{0.1847}\PY{p}{,}\PY{l+m+mf}{0.3332}\PY{p}{,}\PY{l+m+mf}{0.0676}\PY{p}{,}\PY{l+m+mf}{0.1097}\PY{p}{,}\PY{l+m+mf}{0.0952}\PY{p}{,}\PY{l+m+mf}{0.2095}\PY{p}{]}\PY{p}{,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Type II}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{p}{[}\PY{l+m+mf}{0.0200}\PY{p}{,}\PY{l+m+mf}{0.0163}\PY{p}{,}\PY{l+m+mf}{0.1560}\PY{p}{,}\PY{l+m+mf}{0.2885}\PY{p}{,}\PY{l+m+mf}{0.1483}\PY{p}{,}\PY{l+m+mf}{0.1019}\PY{p}{,}\PY{l+m+mf}{0.1867}\PY{p}{,}\PY{l+m+mf}{0.0233}\PY{p}{,}\PY{l+m+mf}{0.1067}\PY{p}{,}\PY{l+m+mf}{0.1011}\PY{p}{,}\PY{l+m+mf}{0.2407}\PY{p}{,}\PY{l+m+mf}{0.0666}\PY{p}{,}\PY{l+m+mf}{0.0133}\PY{p}{,}\PY{l+m+mf}{0.2897}\PY{p}{,}\PY{l+m+mf}{0.0425}\PY{p}{,}\PY{l+m+mf}{0.2191}\PY{p}{,}\PY{l+m+mf}{0.0789}\PY{p}{,}\PY{l+m+mf}{0.3570}\PY{p}{,}\PY{l+m+mf}{0.0760}\PY{p}{,}\PY{l+m+mf}{0.0913}\PY{p}{,}\PY{l+m+mf}{0.0400}\PY{p}{,}\PY{l+m+mf}{0.1467}\PY{p}{]}\PY{p}{\PYZcb{}}\PY{p}{)}
+\PY{n}{seeded}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{121}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+   Type I  Type II
+0  0.1218   0.0200
+1  0.0403   0.0163
+2  0.1166   0.1560
+3  0.2375   0.2885
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \emph{Solution: we set \(H_0\) be the hypothesis that there is no
+increase in rainfall, and \(H_1\) be the hypothesis that there is an
+increase in rainfall.}
+
+    \emph{For Type I target.}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{176}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{U}\PY{p}{,} \PY{n}{p} \PY{o}{=} \PY{n}{stats}\PY{o}{.}\PY{n}{mannwhitneyu}\PY{p}{(}\PY{n}{control}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Type I}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{n}{seeded}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Type I}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{n}{alternative}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{less}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+\PY{k}{if} \PY{n}{p} \PY{o}{\PYZlt{}} \PY{l+m+mf}{0.05}\PY{p}{:}
+    \PY{n}{test\PYZus{}result} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{reject H0.}\PY{l+s+s2}{\PYZdq{}}
+\PY{k}{else}\PY{p}{:}
+    \PY{n}{test\PYZus{}result} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{insufficient evidence to reject H0.}\PY{l+s+s2}{\PYZdq{}}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Mann\PYZhy{}Whitney statistic = }\PY{l+s+s2}{\PYZob{}}\PY{l+s+s2}{np.round(U,4)\PYZcb{}, p\PYZhy{}value = }\PY{l+s+s2}{\PYZob{}}\PY{l+s+s2}{np.round(p,4)\PYZcb{}}\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{, }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n}{test\PYZus{}result}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Mann-Whitney statistic = 130.0, p-value = 0.3348, insufficient evidence to
+reject H0.
+    \end{Verbatim}
+
+    \emph{For Type II target.}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{177}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{U}\PY{p}{,} \PY{n}{p} \PY{o}{=} \PY{n}{stats}\PY{o}{.}\PY{n}{mannwhitneyu}\PY{p}{(}\PY{n}{control}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Type II}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{n}{seeded}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Type II}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{n}{alternative}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{less}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+\PY{k}{if} \PY{n}{p} \PY{o}{\PYZlt{}} \PY{l+m+mf}{0.05}\PY{p}{:}
+    \PY{n}{test\PYZus{}result} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{reject H0.}\PY{l+s+s2}{\PYZdq{}}
+\PY{k}{else}\PY{p}{:}
+    \PY{n}{test\PYZus{}result} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{insufficient evidence to reject H0.}\PY{l+s+s2}{\PYZdq{}}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Mann\PYZhy{}Whitney statistic = }\PY{l+s+s2}{\PYZob{}}\PY{l+s+s2}{np.round(U,4)\PYZcb{}, p\PYZhy{}value = }\PY{l+s+s2}{\PYZob{}}\PY{l+s+s2}{np.round(p,4)\PYZcb{}}\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{, }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n}{test\PYZus{}result}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Mann-Whitney statistic = 108.0, p-value = 0.1194, insufficient evidence to
+reject H0.
+    \end{Verbatim}
+
+    \emph{Conclusion: For both cases, there is insufficient evidence to
+conclude that there is an increase in rainfall due to cloud-seeding.}
+
+    \hypertarget{rice-13.24---performance-in-sporting-contest}{%
+\section{Rice 13.24 - Performance in Sporting
+Contest}\label{rice-13.24---performance-in-sporting-contest}}
+
+\emph{Is it advantageous to wear the color red in a sporting contest?}
+According to Hill and Barton (2005): \textgreater{} Although other
+colours are also present in animal displays, it is specifically the
+presence and intensity of red coloration that correlates with male
+dominance and testosterone levels. In humans, anger is associated with a
+reddening of the skin due to increased blood flow, whereas fear is
+associated with increased pallor in similarly threatening situations.
+Hence, increased redness during aggressive interactions may reflect
+relative dominance. Because artificial stimuli can exploit innate
+responses to natural stimuli, we tested whether wearing red might
+influence the outcome of physical contests in humans\ldots{}
+
+In the 2004 Olympic Games, contestants in four combat sports (boxing,
+tae kwon do, Greco-Roman wrestling, and freestyle wrestling) were
+randomly assigned red or blue outfits (or body protectors). If colour
+has no effect on the outcome of contests, the number of winners wearing
+red should be statistically indistinguishable from the number of winners
+wearing blue. They thus tabulated the colors worn by the winners in
+these contests: 
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{124}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{result} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{p}{\PYZob{}}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Sport}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Boxing}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Freestyle Wrestling}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Greco Roman Wrestling}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Tae Kwon Do}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Red}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{p}{[}\PY{l+m+mi}{148}\PY{p}{,} \PY{l+m+mi}{27}\PY{p}{,} \PY{l+m+mi}{25}\PY{p}{,} \PY{l+m+mi}{45}\PY{p}{]}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Blue}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{p}{[}\PY{l+m+mi}{120}\PY{p}{,} \PY{l+m+mi}{24}\PY{p}{,} \PY{l+m+mi}{23}\PY{p}{,} \PY{l+m+mi}{35}\PY{p}{]}
+\PY{p}{\PYZcb{}}\PY{p}{)}
+\PY{n}{result}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{124}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+                   Sport  Red  Blue
+0                 Boxing  148   120
+1    Freestyle Wrestling   27    24
+2  Greco Roman Wrestling   25    23
+3            Tae Kwon Do   45    35
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{125}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{row\PYZus{}total} \PY{o}{=} \PY{n}{result}\PY{o}{.}\PY{n}{Red} \PY{o}{+} \PY{n}{result}\PY{o}{.}\PY{n}{Blue}
+\PY{n}{row\PYZus{}total}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{125}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+0    268
+1     51
+2     48
+3     80
+dtype: int64
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{126}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{col\PYZus{}total} \PY{o}{=} \PY{n}{result}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{:}\PY{l+m+mi}{3}\PY{p}{]}
+\PY{n}{col\PYZus{}total}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{126}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+Red     245
+Blue    202
+dtype: object
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{127}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{total} \PY{o}{=} \PY{n}{result}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{:}\PY{l+m+mi}{3}\PY{p}{]}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}
+\PY{n}{total}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{127}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+447
+\end{Verbatim}
+\end{tcolorbox}
+        
+    Some supplementary information is given in the file
+\texttt{red-blue.txt}.
+
+    \textbf{Part (a)} Let \(\pi_R\) denote the probability that the
+contestant wearing red wins. Test the null hypothesis
+\(H_0: \pi_R = 1/2\) versus the alternative hypothesis \(H_1:\)
+\(\pi_R\) is the same in each sport, but \(\pi_R \neq 1/2\).
+
+    \emph{Solution: According to recitation, this is just a proportion test.
+Assume \(\alpha = 0.05\). Under null hypothesis, the total number of
+winners wearing red (despite type of sport) follows the distribution
+\(R \sim \text{B}(447,0.5)\), which can be approximated by a normal
+distribution \(\text{N}(447 \times 0.5, 447 \times 0.25)\). We can now
+perform a two-sided z-test. Therefore the sample proportion
+approximately follows a \(\text{N}(0.5, 0.25/447)\) distribution.}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{169}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{z} \PY{o}{=} \PY{p}{(} \PY{p}{(}\PY{n}{col\PYZus{}total}\PY{o}{.}\PY{n}{Red}\PY{p}{)}\PY{o}{/}\PY{n}{total} \PY{o}{\PYZhy{}} \PY{l+m+mf}{0.5}\PY{p}{)} \PY{o}{/} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{l+m+mi}{1}\PY{o}{/} \PY{p}{(}\PY{n}{total} \PY{o}{*} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}
+\PY{n}{p} \PY{o}{=} \PY{l+m+mi}{1} \PY{o}{\PYZhy{}} \PY{n}{stats}\PY{o}{.}\PY{n}{norm}\PY{o}{.}\PY{n}{cdf}\PY{p}{(}\PY{n}{z}\PY{p}{)} \PY{o}{+} \PY{n}{stats}\PY{o}{.}\PY{n}{norm}\PY{o}{.}\PY{n}{cdf}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{z}\PY{p}{)} 
+
+\PY{k}{if} \PY{n}{p} \PY{o}{\PYZlt{}} \PY{l+m+mf}{0.05}\PY{p}{:}
+    \PY{n}{test\PYZus{}result} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{reject H0.}\PY{l+s+s2}{\PYZdq{}}
+\PY{k}{else}\PY{p}{:}
+    \PY{n}{test\PYZus{}result} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{insufficient evidence to reject H0.}\PY{l+s+s2}{\PYZdq{}}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{z statistic = }\PY{l+s+s2}{\PYZob{}}\PY{l+s+s2}{np.round(z,4)\PYZcb{}, p\PYZhy{}value = }\PY{l+s+s2}{\PYZob{}}\PY{l+s+s2}{np.round(p,4)\PYZcb{}}\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{, }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n}{test\PYZus{}result}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+z statistic = 2.0338, p-value = 0.042, reject H0.
+    \end{Verbatim}
+
+    \textbf{Part (b)} Test the null hypothesis that \(\pi_R = 1/2\) versus
+the alternative hypothesis that allows \(\pi_R\) to be different in
+different sports, but not equal to \(1/2\).
+
+    \emph{Solution: We use a likelihood ratio test. According to recitation
+again, we can calculate the chi2 statistic as followed:}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{129}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{X2\PYZus{}arr} \PY{o}{=} \PY{l+m+mi}{4}\PY{o}{*}\PY{p}{(}\PY{n}{result}\PY{o}{.}\PY{n}{Red} \PY{o}{\PYZhy{}} \PY{n}{row\PYZus{}total}\PY{o}{/}\PY{l+m+mi}{2}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2} \PY{o}{/} \PY{n}{row\PYZus{}total}
+\PY{n}{X2} \PY{o}{=} \PY{n}{X2\PYZus{}arr}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}
+\PY{n}{p} \PY{o}{=} \PY{l+m+mi}{1} \PY{o}{\PYZhy{}} \PY{n}{stats}\PY{o}{.}\PY{n}{chi2}\PY{o}{.}\PY{n}{cdf}\PY{p}{(}\PY{n}{X2}\PY{p}{,}\PY{n}{df}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{)}
+
+\PY{k}{if} \PY{n}{p} \PY{o}{\PYZlt{}} \PY{l+m+mf}{0.05}\PY{p}{:}
+    \PY{n}{test\PYZus{}result} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{reject H0.}\PY{l+s+s2}{\PYZdq{}}
+\PY{k}{else}\PY{p}{:}
+    \PY{n}{test\PYZus{}result} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{insufficient evidence to reject H0.}\PY{l+s+s2}{\PYZdq{}}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{chi2 statistic = }\PY{l+s+s2}{\PYZob{}}\PY{l+s+s2}{np.round(X2,4)\PYZcb{}, p\PYZhy{}value = }\PY{l+s+s2}{\PYZob{}}\PY{l+s+s2}{np.round(p,4)\PYZcb{}, df = 4}\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{, }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n}{test\PYZus{}result}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+chi2 statistic = 4.4352, p-value = 0.3503, df = 4, insufficient evidence to
+reject H0.
+    \end{Verbatim}
+
+    \textbf{Part (c)} Are either of these hypothesis tests equivalent to
+that which would test the null hypothesis \(\pi_R = 1/2\) versus the
+alternative hypothesis \(\pi_R \neq 1/2\), using the data the total
+numbers of wins summed over all the sports?
+
+    \emph{Solution: This is equivalent to (a), but not (b).}
+
+    \textbf{Part (d)} Is there any evidence that wearing red is more
+favorable in some of the sports than others?
+
+    \emph{Solution: We use \(\chi^2\) test for contingency table, which is
+the command \texttt{chi2\_contingency} in the \texttt{scipy.stats}
+library. Again we use \(\alpha = 0.05\).}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{130}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{chi2}\PY{p}{,} \PY{n}{pval}\PY{p}{,} \PY{n}{dof}\PY{p}{,} \PY{n}{expected} \PY{o}{=} \PY{n}{stats}\PY{o}{.}\PY{n}{chi2\PYZus{}contingency}\PY{p}{(}\PY{n}{result}\PY{p}{[}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Red}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Blue}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{]}\PY{o}{.}\PY{n}{values}\PY{p}{)}
+
+\PY{k}{if} \PY{n}{p} \PY{o}{\PYZlt{}} \PY{l+m+mf}{0.05}\PY{p}{:}
+    \PY{n}{test\PYZus{}result} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{reject H0.}\PY{l+s+s2}{\PYZdq{}}
+\PY{k}{else}\PY{p}{:}
+    \PY{n}{test\PYZus{}result} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{insufficient evidence to reject H0.}\PY{l+s+s2}{\PYZdq{}}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{chi2 statistic = }\PY{l+s+s2}{\PYZob{}}\PY{l+s+s2}{np.round(chi2,4)\PYZcb{}, p\PYZhy{}value = }\PY{l+s+s2}{\PYZob{}}\PY{l+s+s2}{np.round(pval,4)\PYZcb{}, df = }\PY{l+s+si}{\PYZob{}dof\PYZcb{}}\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{, }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n}{test\PYZus{}result}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+chi2 statistic = 0.3015, p-value = 0.9597, df = 3, insufficient evidence to
+reject H0.
+    \end{Verbatim}
+
+    \emph{As a reference, here the expected frequencies are tabulated.}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{131}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{expected}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{131}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+array([[146.89038031, 121.10961969],
+       [ 27.95302013,  23.04697987],
+       [ 26.30872483,  21.69127517],
+       [ 43.84787472,  36.15212528]])
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \textbf{Part (e)} From an analysis of the points scored by winners and
+losers, Hill and Barton concluded that color had the greatest effect in
+close contests. Data on the points of each match are contained in the
+file \texttt{red-blue.xls}. Analyze this data and see whether you agree
+with their conclusion.
+
+    \emph{Solution: First import the data.}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{132}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{boxing} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{red\PYZhy{}blue\PYZus{}boxing.txt}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{freestyle} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{red\PYZhy{}blue\PYZus{}FW.txt}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{grwrestling} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{red\PYZhy{}blue\PYZus{}GR.txt}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{taikwondo} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{red\PYZhy{}blue\PYZus{}TKD.txt}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \emph{We specifically look at the data when
+\texttt{Method\ of\ Win\ =\ "Points"} as these rounds represent ``close
+contests''. We therefore compute the difference of points (\texttt{Red}
+minus \texttt{Blue}) then filter out the \texttt{NaN}'s entries. For
+convenience we write a function that do our job.}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{162}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def} \PY{n+nf}{wilcoxon\PYZus{}sport}\PY{p}{(}\PY{n}{data}\PY{p}{)}\PY{p}{:}
+    \PY{n}{diff} \PY{o}{=} \PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Points Scored by Red}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{data}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Points Scored by Blue}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{dropna}\PY{p}{(}\PY{p}{)}
+    \PY{c+c1}{\PYZsh{} diff\PYZus{}filtered = diff[diff \PYZlt{}= diff.quantile(.25)]}
+    
+    \PY{n}{w}\PY{p}{,} \PY{n}{p} \PY{o}{=} \PY{n}{stats}\PY{o}{.}\PY{n}{wilcoxon}\PY{p}{(}\PY{n}{diff}\PY{p}{,} \PY{n}{alternative}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{greater}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+    \PY{c+c1}{\PYZsh{} w, p = stats.wilcoxon(diff\PYZus{}filtered, alternative=\PYZdq{}greater\PYZdq{})}
+    
+    \PY{k}{if} \PY{n}{p} \PY{o}{\PYZlt{}} \PY{l+m+mf}{0.05}\PY{p}{:}
+        \PY{n}{test\PYZus{}result} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{reject H0.}\PY{l+s+s2}{\PYZdq{}}
+    \PY{k}{else}\PY{p}{:}
+        \PY{n}{test\PYZus{}result} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{insufficient evidence to reject H0.}\PY{l+s+s2}{\PYZdq{}}
+    
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Wilcoxon statistic = }\PY{l+s+s2}{\PYZob{}}\PY{l+s+s2}{np.round(w,4)\PYZcb{}, p\PYZhy{}value = }\PY{l+s+s2}{\PYZob{}}\PY{l+s+s2}{np.round(p,4)\PYZcb{}}\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{, }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n}{test\PYZus{}result}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{163}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{wilcoxon\PYZus{}sport}\PY{p}{(}\PY{n}{boxing}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Wilcoxon statistic = 13311.0, p-value = 0.3979, insufficient evidence to reject
+H0.
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{164}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{wilcoxon\PYZus{}sport}\PY{p}{(}\PY{n}{freestyle}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Wilcoxon statistic = 835.5, p-value = 0.2105, insufficient evidence to reject
+H0.
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{165}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{wilcoxon\PYZus{}sport}\PY{p}{(}\PY{n}{grwrestling}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Wilcoxon statistic = 580.5, p-value = 0.781, insufficient evidence to reject H0.
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{166}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{wilcoxon\PYZus{}sport}\PY{p}{(}\PY{n}{taikwondo}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Wilcoxon statistic = 1057.0, p-value = 0.4546, insufficient evidence to reject
+H0.
+    \end{Verbatim}
+
+    \emph{For all sports, there is insufficient evidence to conclude that
+color has effect on the difference of points. Seems like the data does
+not agree with the conclusion.}
+
+\textbf{Remark:} 1. As pointed out by other classmates, this is not a
+good way to access whether color has \emph{greatest} effect in close
+contest, because there are no other effects to be compared with. Perhaps
+we can access whether color has \emph{significant} effect instead. In
+fact, according to \texttt{red-blue.txt}:
+
+\begin{quote}
+For each sport, every contest was categorized on the basis of the
+quartile of the final points difference in the bout, where the first
+quartile of points difference represents symmetrical contests between
+competitors of similar ability and the fourth quartile represents
+contests between competitors with large asymmetries in ability. Contests
+stopped early (such as by knockout) were scored as highly asymmetric
+contests and coded in the fourth quartile.
+\end{quote}
+
+There is no clear indication of quartiles. (The followed cell listed all
+labels in the datasets.) It is unclear whether we actually have to
+define the quantiles ourselves, so we adopt the simplest approach of
+dropping all \texttt{NaN} entries and do a Wilcoxon rank sum test (we
+did try to isolate the first quantile but has no progress). Appreciate
+your further guidance.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{145}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nb}{set}\PY{p}{(}\PY{n}{boxing}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Method of Win}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{values}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{145}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\{'Disqualified',
+ 'Points',
+ 'Referee Stopped Contest',
+ 'Referee Stopped Contest - Outscored',
+ 'Walk Over'\}
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  It is a little bit late to ask this, but it is not clear whether we
+  need to manually code up all the testing algorithms instead of using
+  built-in algorithms. Please clarify in lectures/recitations.
+\end{enumerate}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+\end{document}
