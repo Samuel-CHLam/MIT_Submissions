@@ -138,6 +138,8 @@
     \let\Oldlatex\LaTeX
     \renewcommand{\TeX}{\textrm{\Oldtex}}
     \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    
     
     
     
@@ -358,13 +360,12 @@
 	\chead{15.077 Statistical ML and DS \\ Problem Sheet 4}
 	\lhead{}
 	\setlength{\headheight}{15pt}
-    
+
     % Document title
     \title{15.077 Statistical ML and DS}
 
 \begin{document}
-    
-\begin{figure}
+    \begin{figure}
 \includegraphics[scale=0.5]{MIT-Logo-(2).jpg}
 \end{figure}
 
@@ -403,10 +404,8 @@ Acknowledgement to Harry Yu. Please look at the python notebook attached if ther
 \end{tcolorbox}
 \newpage
 
-
-
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{93}{\boxspacing}
+\prompt{In}{incolor}{1}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
 \PY{k+kn}{from} \PY{n+nn}{scipy} \PY{k+kn}{import} \PY{n}{stats}
@@ -924,21 +923,21 @@ x_1 = \frac{T-775}{115}, \quad x_2 = \frac{t-3}{1.5}
 \(10^3\).
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{59}{\boxspacing}
+\prompt{In}{incolor}{2}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{Impurities} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Impurities.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{60}{\boxspacing}
+\prompt{In}{incolor}{3}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{Impurities}
 \end{Verbatim}
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{60}{\boxspacing}
+\prompt{Out}{outcolor}{3}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
      x1   x2    y
 0  -1.0 -1.0  211
@@ -963,16 +962,16 @@ the design be rotated.
 design cannot be rotated.}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{72}{\boxspacing}
+\prompt{In}{incolor}{4}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{Impurities}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{x1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{n}{Impurities}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{x2}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{72}{\boxspacing}
+\prompt{Out}{outcolor}{4}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-<matplotlib.collections.PathCollection at 0x1b33859d288>
+<matplotlib.collections.PathCollection at 0x1460c084c88>
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -985,9 +984,9 @@ design cannot be rotated.}
 satisfactory?
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{61}{\boxspacing}
+\prompt{In}{incolor}{6}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{model} \PY{o}{=} \PY{n}{sm}\PY{o}{.}\PY{n}{formula}\PY{o}{.}\PY{n}{ols}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y \PYZti{} x1+x2+x1**2+x2**2+x1*x2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{data}\PY{o}{=}\PY{n}{Impurities}\PY{p}{)}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{p}{)}
+\PY{n}{model} \PY{o}{=} \PY{n}{sm}\PY{o}{.}\PY{n}{formula}\PY{o}{.}\PY{n}{ols}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y \PYZti{} x1+x2+I(x1**2)+I(x2**2)+x1*x2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{data}\PY{o}{=}\PY{n}{Impurities}\PY{p}{)}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{p}{)}
 \PY{n}{model}\PY{o}{.}\PY{n}{summary}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
@@ -999,33 +998,35 @@ UserWarning: kurtosistest only valid for n>=20 {\ldots} continuing anyway, n=12
     \end{Verbatim}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{61}{\boxspacing}
+\prompt{Out}{outcolor}{6}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 <class 'statsmodels.iolib.summary.Summary'>
 """
                             OLS Regression Results
 ==============================================================================
-Dep. Variable:                      y   R-squared:                       0.906
-Model:                            OLS   Adj. R-squared:                  0.871
-Method:                 Least Squares   F-statistic:                     25.83
-Date:                Fri, 02 Apr 2021   Prob (F-statistic):           0.000182
-Time:                        01:12:40   Log-Likelihood:                -50.177
-No. Observations:                  12   AIC:                             108.4
-Df Residuals:                       8   BIC:                             110.3
-Df Model:                           3
+Dep. Variable:                      y   R-squared:                       0.954
+Model:                            OLS   Adj. R-squared:                  0.916
+Method:                 Least Squares   F-statistic:                     24.91
+Date:                Sat, 03 Apr 2021   Prob (F-statistic):           0.000604
+Time:                        22:46:01   Log-Likelihood:                -45.909
+No. Observations:                  12   AIC:                             103.8
+Df Residuals:                       6   BIC:                             106.7
+Df Model:                           5
 Covariance Type:            nonrobust
 ==============================================================================
                  coef    std err          t      P>|t|      [0.025      0.975]
 ------------------------------------------------------------------------------
-Intercept    152.9167      5.600     27.307      0.000     140.003     165.830
-x1           -58.4706      6.654     -8.788      0.000     -73.814     -43.127
-x2             3.3529      6.654      0.504      0.628     -11.991      18.696
-x1:x2          0.5000      9.699      0.052      0.960     -21.867      22.867
+Intercept    150.0445      7.821     19.184      0.000     130.907     169.182
+x1           -58.4706      5.384    -10.861      0.000     -71.644     -45.297
+x2             3.3529      5.384      0.623      0.556      -9.821      16.526
+I(x1 ** 2)    -6.5282      5.693     -1.147      0.295     -20.460       7.403
+I(x2 ** 2)    10.5830      5.693      1.859      0.112      -3.349      24.514
+x1:x2          0.5000      7.848      0.064      0.951     -18.704      19.704
 ==============================================================================
-Omnibus:                        0.298   Durbin-Watson:                   2.567
-Prob(Omnibus):                  0.862   Jarque-Bera (JB):                0.410
-Skew:                          -0.275   Prob(JB):                        0.815
-Kurtosis:                       2.280   Cond. No.                         1.73
+Omnibus:                        6.900   Durbin-Watson:                   2.742
+Prob(Omnibus):                  0.032   Jarque-Bera (JB):                3.519
+Skew:                          -0.381   Prob(JB):                        0.172
+Kurtosis:                       5.541   Cond. No.                         3.21
 ==============================================================================
 
 Notes:
@@ -1051,7 +1052,7 @@ per day and the results are reportedas parts per million. The values for
 25 days are given in the table below.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{64}{\boxspacing}
+\prompt{In}{incolor}{7}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{Copper} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Copper.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
 \end{Verbatim}
@@ -1064,7 +1065,7 @@ the process in statistical control.
     \emph{Solution: we first obtain the mean and range of each observation.}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{177}{\boxspacing}
+\prompt{In}{incolor}{8}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{Copper}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Omean}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]} \PY{o}{=} \PY{n}{Copper}\PY{p}{[}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{O1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{O2}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{O3}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{]}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
 \PY{n}{Copper}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Range}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]} \PY{o}{=} \PY{n}{Copper}\PY{p}{[}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{O1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{O2}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{O3}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{]}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{Copper}\PY{p}{[}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{O1}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{O2}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{O3}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{]}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
@@ -1077,21 +1078,21 @@ limits for \(\bar{X}\) and \(R\) charts as well as actual control
 chart.}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{186}{\boxspacing}
+\prompt{In}{incolor}{9}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{186}{\boxspacing}
+\prompt{Out}{outcolor}{9}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 3.0
 \end{Verbatim}
 \end{tcolorbox}
         
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{204}{\boxspacing}
+\prompt{In}{incolor}{14}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k}{def} \PY{n+nf}{XbarRchart}\PY{p}{(}\PY{n}{mean\PYZus{}vec}\PY{p}{,} \PY{n}{range\PYZus{}vec}\PY{p}{,} \PY{n}{Xbar\PYZus{}plot}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,} \PY{n}{R\PYZus{}plot}\PY{o}{=}\PY{k+kc}{None}\PY{p}{)}\PY{p}{:} \PY{c+c1}{\PYZsh{} input array of mean and range}
     
@@ -1102,7 +1103,7 @@ chart.}
     \PY{n}{n} \PY{o}{=} \PY{l+m+mi}{3}\PY{p}{;} \PY{n}{A2} \PY{o}{=} \PY{l+m+mf}{1.023}\PY{p}{;} \PY{n}{D3} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{;} \PY{n}{D4} \PY{o}{=} \PY{l+m+mf}{2.575}\PY{p}{;}
     
     \PY{c+c1}{\PYZsh{} Obtain the control limits in control charts.}
-    \PY{n}{Xbar\PYZus{}UCL} \PY{o}{=} \PY{n}{grand\PYZus{}mu} \PY{o}{+} \PY{n}{A2}\PY{o}{*}\PY{n}{mean\PYZus{}range}\PY{p}{;} \PY{n}{Xbar\PYZus{}LCL} \PY{o}{=} \PY{n}{grand\PYZus{}mu} \PY{o}{\PYZhy{}} \PY{n}{A2}\PY{o}{*}\PY{n}{mean\PYZus{}range}
+    \PY{n}{Xbar\PYZus{}UCL} \PY{o}{=} \PY{n}{grand\PYZus{}mean} \PY{o}{+} \PY{n}{A2}\PY{o}{*}\PY{n}{mean\PYZus{}range}\PY{p}{;} \PY{n}{Xbar\PYZus{}LCL} \PY{o}{=} \PY{n}{grand\PYZus{}mean} \PY{o}{\PYZhy{}} \PY{n}{A2}\PY{o}{*}\PY{n}{mean\PYZus{}range}
     \PY{n}{R\PYZus{}UCL} \PY{o}{=} \PY{n}{D4}\PY{o}{*}\PY{n}{mean\PYZus{}range}\PY{p}{;} \PY{n}{R\PYZus{}LCL} \PY{o}{=} \PY{n}{D3}\PY{o}{*}\PY{n}{mean\PYZus{}range}
     
     \PY{c+c1}{\PYZsh{} Return Xbar plot.}
@@ -1110,7 +1111,7 @@ chart.}
         \PY{n}{Xbar\PYZus{}plot}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{mean\PYZus{}vec}\PY{p}{)}
         \PY{n}{Xbar\PYZus{}plot}\PY{o}{.}\PY{n}{axhline}\PY{p}{(}\PY{n}{y}\PY{o}{=}\PY{n}{Xbar\PYZus{}UCL}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
         \PY{n}{Xbar\PYZus{}plot}\PY{o}{.}\PY{n}{axhline}\PY{p}{(}\PY{n}{y}\PY{o}{=}\PY{n}{Xbar\PYZus{}LCL}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-        \PY{n}{Xbar\PYZus{}plot}\PY{o}{.}\PY{n}{axhline}\PY{p}{(}\PY{n}{y}\PY{o}{=}\PY{n}{grand\PYZus{}mu}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{Xbar\PYZus{}plot}\PY{o}{.}\PY{n}{axhline}\PY{p}{(}\PY{n}{y}\PY{o}{=}\PY{n}{grand\PYZus{}mean}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
         \PY{n}{Xbar\PYZus{}plot}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Run}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
         \PY{n}{Xbar\PYZus{}plot}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mean of Observation}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
         \PY{n}{Xbar\PYZus{}plot}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Xbar Chart (mean = }\PY{l+s+s1}{\PYZob{}}\PY{l+s+s1}{np.round(grand\PYZus{}mean,3)\PYZcb{}, limits = (}\PY{l+s+s1}{\PYZob{}}\PY{l+s+s1}{np.round(Xbar\PYZus{}LCL, 3)\PYZcb{}, }\PY{l+s+s1}{\PYZob{}}\PY{l+s+s1}{np.round(Xbar\PYZus{}UCL, 3)\PYZcb{}))}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
@@ -1136,7 +1137,7 @@ chart.}
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{205}{\boxspacing}
+\prompt{In}{incolor}{15}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{fig}\PY{p}{,} \PY{p}{(}\PY{n}{ax1}\PY{p}{,} \PY{n}{ax2}\PY{p}{)} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{n}{nrows}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{ncols}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{14}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
 \PY{n}{result} \PY{o}{=} \PY{n}{XbarRchart}\PY{p}{(}\PY{n}{Copper}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Omean}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{n}{Copper}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Range}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{n}{Xbar\PYZus{}plot}\PY{o}{=}\PY{n}{ax1}\PY{p}{,} \PY{n}{R\PYZus{}plot}\PY{o}{=}\PY{n}{ax2}\PY{p}{)}
@@ -1163,7 +1164,7 @@ limits. Here I do not use while loop since we should be able to make all
 points fall into control limit within two iterations.}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{212}{\boxspacing}
+\prompt{In}{incolor}{19}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{filtered} \PY{o}{=} \PY{n}{Copper}\PY{p}{[}\PY{p}{(}\PY{n}{Copper}\PY{o}{.}\PY{n}{Omean} \PY{o}{\PYZlt{}} \PY{n}{result}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Xbar\PYZus{}lim}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)} \PY{o}{\PYZam{}} \PY{p}{(}\PY{n}{Copper}\PY{o}{.}\PY{n}{Omean} \PY{o}{\PYZgt{}} \PY{n}{result}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Xbar\PYZus{}lim}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{]}
 \PY{n}{fig}\PY{p}{,} \PY{p}{(}\PY{n}{ax1}\PY{p}{,} \PY{n}{ax2}\PY{p}{)} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{n}{nrows}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{ncols}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{14}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
@@ -1180,28 +1181,28 @@ points fall into control limit within two iterations.}
 fall in between the control limits.}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{213}{\boxspacing}
+\prompt{In}{incolor}{21}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{n+nb}{all}\PY{p}{(}\PY{n}{filtered} \PY{o}{==} \PY{n}{filtered}\PY{p}{[}\PY{p}{(}\PY{n}{filtered}\PY{o}{.}\PY{n}{Omean} \PY{o}{\PYZlt{}} \PY{n}{result2}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Xbar\PYZus{}lim}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)} \PY{o}{\PYZam{}} \PY{p}{(}\PY{n}{filtered}\PY{o}{.}\PY{n}{Omean} \PY{o}{\PYZgt{}} \PY{n}{result2}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Xbar\PYZus{}lim}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+\PY{n}{filtered2} \PY{o}{=} \PY{n}{filtered}\PY{p}{[}\PY{p}{(}\PY{n}{filtered}\PY{o}{.}\PY{n}{Omean} \PY{o}{\PYZlt{}} \PY{n}{result2}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Xbar\PYZus{}lim}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)} \PY{o}{\PYZam{}} \PY{p}{(}\PY{n}{filtered}\PY{o}{.}\PY{n}{Omean} \PY{o}{\PYZgt{}} \PY{n}{result2}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Xbar\PYZus{}lim}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{]}
+\PY{n}{fig}\PY{p}{,} \PY{p}{(}\PY{n}{ax1}\PY{p}{,} \PY{n}{ax2}\PY{p}{)} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{n}{nrows}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{ncols}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{14}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
+\PY{n}{result3} \PY{o}{=} \PY{n}{XbarRchart}\PY{p}{(}\PY{n}{filtered2}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Omean}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{n}{filtered2}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Range}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{n}{Xbar\PYZus{}plot}\PY{o}{=}\PY{n}{ax1}\PY{p}{,} \PY{n}{R\PYZus{}plot}\PY{o}{=}\PY{n}{ax2}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
-            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{213}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-True
-\end{Verbatim}
-\end{tcolorbox}
-        
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_72_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
     \textbf{Part (c)} Given that the specifications are at \(6.0 \pm 0.5\),
 estimate \(C_p\) and \(C_{pk}\) for the in-control process and interpret
 these ratios.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{217}{\boxspacing}
+\prompt{In}{incolor}{22}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{USL} \PY{o}{=} \PY{l+m+mf}{6.5}\PY{p}{;} \PY{n}{LSL} \PY{o}{=} \PY{l+m+mf}{5.5}\PY{p}{;} \PY{n}{d2} \PY{o}{=} \PY{l+m+mf}{1.693}\PY{p}{;}
-\PY{n}{mu} \PY{o}{=} \PY{n}{result2}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{grand\PYZus{}mean}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{;} \PY{n}{sigma\PYZus{}hat} \PY{o}{=} \PY{n}{result2}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{mean\PYZus{}range}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]} \PY{o}{/} \PY{n}{d2}
+\PY{n}{mu} \PY{o}{=} \PY{n}{result3}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{grand\PYZus{}mean}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{;} \PY{n}{sigma\PYZus{}hat} \PY{o}{=} \PY{n}{result3}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{mean\PYZus{}range}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]} \PY{o}{/} \PY{n}{d2}
 \PY{n}{Cp} \PY{o}{=} \PY{p}{(}\PY{n}{USL} \PY{o}{\PYZhy{}} \PY{n}{LSL}\PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{l+m+mi}{6} \PY{o}{*} \PY{n}{sigma\PYZus{}hat}\PY{p}{)}
 \PY{n}{Cpk} \PY{o}{=} \PY{n+nb}{min}\PY{p}{(}\PY{p}{(}\PY{n}{USL}\PY{o}{\PYZhy{}}\PY{n}{mu}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{n}{mu}\PY{o}{\PYZhy{}}\PY{n}{LSL}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{l+m+mi}{3} \PY{o}{*} \PY{n}{sigma\PYZus{}hat}\PY{p}{)}
 \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Cp = }\PY{l+s+s2}{\PYZob{}}\PY{l+s+s2}{np.round(Cp,5)\PYZcb{}, Cpk = }\PY{l+s+s2}{\PYZob{}}\PY{l+s+s2}{np.round(Cpk,5)\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
@@ -1209,7 +1210,7 @@ these ratios.
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-Cp = 0.2495, Cpk = 0.10986
+Cp = 0.24845, Cpk = 0.13763
     \end{Verbatim}
 
     \emph{Comment: both \texttt{Cp} and \texttt{Cpk} are very small, so it
@@ -1217,19 +1218,26 @@ is not capable of producing acceptable product. Under normal assumption,
 the average probability of making no mistake is approximately:}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{222}{\boxspacing}
+\prompt{In}{incolor}{23}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{l+m+mi}{1} \PY{o}{\PYZhy{}} \PY{l+m+mi}{2}\PY{o}{*}\PY{p}{(}\PY{l+m+mi}{1} \PY{o}{\PYZhy{}} \PY{n}{stats}\PY{o}{.}\PY{n}{norm}\PY{o}{.}\PY{n}{cdf}\PY{p}{(}\PY{l+m+mi}{3}\PY{o}{*}\PY{n}{Cp}\PY{p}{)}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{222}{\boxspacing}
+\prompt{Out}{outcolor}{23}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-0.5458491299027748
+0.5439373673474139
 \end{Verbatim}
 \end{tcolorbox}
         
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+
+\end{Verbatim}
+\end{tcolorbox}
+
 
     % Add a bibliography block to the postdoc
     
